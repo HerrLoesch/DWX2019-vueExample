@@ -1,23 +1,18 @@
+import VueRouter from 'vue-router'
 import Vue from 'vue'
-import Router from 'vue-router'
-import Home from './views/Home.vue'
+import LottoDrawings from './views/LottoDrawings'
+import LottoDrawingDetails from './views/LottoDrawingDetails'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    }
-  ]
+let routes = [
+  { path: '/drawings', component: LottoDrawings, name: 'list' },
+  { path: '/details/:drawing', component: LottoDrawingDetails, name: 'details' },
+  { path: '*', redirect: '/drawings' }
+]
+
+let router = new VueRouter({
+  routes
 })
+
+export default router

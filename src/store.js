@@ -1,16 +1,51 @@
-import Vue from 'vue'
 import Vuex from 'vuex'
+import Vue from 'vue'
+import _ from 'lodash'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {
+const store = new Vuex.Store({
+    state: {
+      drawings: []
+    },
+    getters: {
+        getDrawings: state => {
+            return state.drawings
+        },
+        getDrawing: state => id => {
+            return _.find(state.drawings, x => x.dateTime === id)
+        }
+    },
+    mutations: {
+      setDrawings (state, drawings) {
+        state.drawings = drawings
+      }
+    },
+    actions: {
+      initialize (context) {
 
-  },
-  mutations: {
+        context.commit('setDrawings', [{
+          date: '24.06.2019',
+          numbers: [1,2,3,4,5,6],
+          additionalNumber: 6
+        },
+        {
+          date: '17.06.2019',
+          numbers: [7,8,9,10,11,12],
+          additionalNumber: 13
+        }])
 
-  },
-  actions: {
+        /*
+        axios.get('https://lottoarchive.azurewebsites.net/values')
+        .then(function (response) {            
+            context.commit('setDrawings', response.data.values)
+           })
+           .catch(function (error) {
+               console.log(error);
+           })                  */
+      }
+    }
+  })
 
-  }
-})
+export default store
+
